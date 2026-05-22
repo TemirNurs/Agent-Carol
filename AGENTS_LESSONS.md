@@ -74,6 +74,16 @@ Format: short rule, then "why" (what broke, when, what the user said).
   _Why: 2026-05-21 — drafted 6 proposals to wrong account, user found them
   on Hyperscale: "why are you drafted on hyperscalewiring You dumb assholle?"_
 
+- **Before EVERY git push, run `git ls-files | xargs grep -l <secret-patterns>`.**
+  Even one stray `*_auth.json` in the tracked tree leaks. The 2026-05-22
+  push leaked `data/config/togal_auth.json` (Togal.AI password + session
+  token) to a public repo for ~25 min before GitGuardian caught it. The
+  `.gitignore` had `*token*` and `*session*` and `*credential*` but NOT
+  `*auth*` — a single missing glob cost a credential rotation. Lesson:
+  before any `git push`, blanket-scan every tracked file under
+  `data/config/` for known secret patterns AND for unfamiliar JSON
+  schemas that might hold credentials.
+
 - **NEVER guess GC contact emails.** Pull from CRM GC Directory + Contacts
   sheet + Gmail Sent history. If not in any of those, say "NOT FOUND" — do
   NOT invent.  
