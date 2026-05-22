@@ -16,9 +16,13 @@ data/config/gdrive_session.json
 data/config/takeoff_config.json
 data/config/parkway_auth.json
 data/config/procore_auth.json
+data/config/togal_auth.json
+data/config/procore_state/
 data/config/*token*
 data/config/*session*
 data/config/*credential*
+data/config/*auth*
+data/config/*state*
 *service_account*.json
 *-private-key*.json
 
