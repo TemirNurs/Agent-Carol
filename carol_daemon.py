@@ -29,6 +29,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
+# Load .env BEFORE any child script imports — all `os.environ.get(...)`
+# fallbacks were stripped on 2026-05-22 (commit before public push), so
+# child scripts MUST find these vars in the environment. The .env file
+# is gitignored and lives only on the operator's machine.
+try:
+    from dotenv import load_dotenv
+    load_dotenv(ROOT / ".env")
+except Exception:
+    # dotenv not installed → child scripts will still work if user set
+    # env vars at the OS level. Log a warning so it's visible.
+    print("⚠️  python-dotenv not installed — install with `pip install python-dotenv` "
+          "or set GMAIL_APP_PASSWORD, TELEGRAM_BOT_TOKEN, USER_TELEGRAM_CHAT_ID "
+          "as OS environment variables.")
+
 from carol_core import CarolCore
 
 # ---------------------------------------------------------------------------
