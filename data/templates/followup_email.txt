@@ -1,0 +1,17 @@
+Subject: Follow-Up: {project_name} ({bid_id})
+
+Body:
+Hi {first_name},
+
+Just following up on our proposal for {project_name} ({bid_id}).
+
+  Bid amount: USD {amount_with_commas}
+  Submitted:  {submitted_date}
+  Days awaiting decision: {days_waiting}
+  Prior follow-ups: {followup_count} (last on {last_followup_date})
+
+Wanted to check whether the project is still active or if the timeline has shifted on your end. Happy to revise pricing if anything in the scope has changed.
+
+Let me know.
+
+(Signature is auto-appended by send_email.py — do NOT add your own signature)

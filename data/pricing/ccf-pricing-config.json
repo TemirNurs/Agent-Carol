@@ -1,0 +1,759 @@
+{
+  "production_rates": {
+    "painting": [
+      {
+        "task": "New drywall \u2014 prime + 2 coats",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 100,
+        "avg_rate": 150,
+        "fast_rate": 200,
+        "coats": "1P+2F",
+        "notes": "Standard commercial interior"
+      },
+      {
+        "task": "Repaint \u2014 2 coats",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 120,
+        "avg_rate": 175,
+        "fast_rate": 225,
+        "coats": "2",
+        "notes": "Walls in fair condition"
+      },
+      {
+        "task": "Repaint \u2014 1 coat touch-up",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 175,
+        "avg_rate": 250,
+        "fast_rate": 300,
+        "coats": "1",
+        "notes": "Minor refresh"
+      },
+      {
+        "task": "Cut-in / edging only",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 40,
+        "avg_rate": 60,
+        "fast_rate": 80,
+        "coats": "per coat",
+        "notes": "Brush work at edges, ceiling lines"
+      },
+      {
+        "task": "New drywall \u2014 spray prime",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 300,
+        "avg_rate": 450,
+        "fast_rate": 600,
+        "coats": "1",
+        "notes": "Airless sprayer, open walls"
+      },
+      {
+        "task": "New drywall \u2014 spray 2 coats",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 250,
+        "avg_rate": 400,
+        "fast_rate": 550,
+        "coats": "2",
+        "notes": "Back-roll if required"
+      },
+      {
+        "task": "Large open walls \u2014 spray",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 400,
+        "avg_rate": 550,
+        "fast_rate": 700,
+        "coats": "per coat",
+        "notes": "Warehouse, gym, open commercial"
+      },
+      {
+        "task": "Spray + back-roll",
+        "category": "",
+        "unit": "SF/hr",
+        "slow_rate": 200,
+        "avg_rate": 300,
+        "fast_rate": 400,
+        "coats": "per coat",
+        "notes": "When spec requires back-rolling"
+      },
+      {
+        "task": "ACT / drop ceiling grid \u2014 spray",
+        "category": "CEILINGS",
+        "unit": "SF/hr",
+        "slow_rate": 200,
+        "avg_rate": 350,
+        "fast_rate": 500,
+        "coats": "1",
+        "notes": "Spray exposed grid"
+      },
+      {
+        "task": "Drywall ceiling \u2014 roll",
+        "category": "CEILINGS",
+        "unit": "SF/hr",
+        "slow_rate": 80,
+        "avg_rate": 125,
+        "fast_rate": 175,
+        "coats": "per coat",
+        "notes": "Overhead work is slower"
+      },
+      {
+        "task": "Drywall ceiling \u2014 spray",
+        "category": "CEILINGS",
+        "unit": "SF/hr",
+        "slow_rate": 200,
+        "avg_rate": 300,
+        "fast_rate": 400,
+        "coats": "per coat",
+        "notes": "Airless, open area"
+      },
+      {
+        "task": "Base/shoe/chair rail",
+        "category": "TRIM & DOORS",
+        "unit": "LF/hr",
+        "slow_rate": 40,
+        "avg_rate": 65,
+        "fast_rate": 90,
+        "coats": "per coat",
+        "notes": "Brush work"
+      },
+      {
+        "task": "Door \u2014 paint (per side)",
+        "category": "TRIM & DOORS",
+        "unit": "hr/door",
+        "slow_rate": 0.75,
+        "avg_rate": 0.5,
+        "fast_rate": 0.33,
+        "coats": "2",
+        "notes": "Standard hollow-core"
+      },
+      {
+        "task": "Door frame \u2014 paint",
+        "category": "TRIM & DOORS",
+        "unit": "hr/frame",
+        "slow_rate": 0.5,
+        "avg_rate": 0.33,
+        "fast_rate": 0.25,
+        "coats": "2",
+        "notes": "Standard metal or wood frame"
+      },
+      {
+        "task": "Window frame",
+        "category": "TRIM & DOORS",
+        "unit": "hr/window",
+        "slow_rate": 0.5,
+        "avg_rate": 0.33,
+        "fast_rate": 0.25,
+        "coats": "2",
+        "notes": "Standard commercial"
+      },
+      {
+        "task": "Exterior walls \u2014 spray",
+        "category": "EXTERIOR",
+        "unit": "SF/hr",
+        "slow_rate": 250,
+        "avg_rate": 400,
+        "fast_rate": 550,
+        "coats": "per coat",
+        "notes": "Stucco, CMU, wood siding"
+      },
+      {
+        "task": "Exterior walls \u2014 roll",
+        "category": "EXTERIOR",
+        "unit": "SF/hr",
+        "slow_rate": 100,
+        "avg_rate": 175,
+        "fast_rate": 250,
+        "coats": "per coat",
+        "notes": "Where spray not possible"
+      },
+      {
+        "task": "Exterior \u2014 pressure wash (prep)",
+        "category": "EXTERIOR",
+        "unit": "SF/hr",
+        "slow_rate": 300,
+        "avg_rate": 500,
+        "fast_rate": 800,
+        "coats": "N/A",
+        "notes": "Before painting"
+      },
+      {
+        "task": "Epoxy floor coating",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 75,
+        "avg_rate": 125,
+        "fast_rate": 175,
+        "coats": "per coat",
+        "notes": "2-part epoxy, includes mixing"
+      },
+      {
+        "task": "Stain \u2014 interior wood",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 100,
+        "avg_rate": 150,
+        "fast_rate": 200,
+        "coats": "per coat",
+        "notes": "Cabinets, trim, paneling"
+      },
+      {
+        "task": "Texture \u2014 knockdown/orange peel",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 100,
+        "avg_rate": 175,
+        "fast_rate": 250,
+        "coats": "1 coat",
+        "notes": "Spray texture application"
+      },
+      {
+        "task": "Tape & float (drywall finish)",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 60,
+        "avg_rate": 90,
+        "fast_rate": 120,
+        "coats": "3 coat",
+        "notes": "Level 4 finish"
+      }
+    ],
+    "prep": [
+      {
+        "task": "Masking / protection",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 150,
+        "avg_rate": 250,
+        "fast_rate": 350,
+        "coats": "N/A",
+        "notes": "Tape, paper, plastic"
+      },
+      {
+        "task": "Sanding \u2014 light",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 100,
+        "avg_rate": 150,
+        "fast_rate": 200,
+        "coats": "N/A",
+        "notes": "De-gloss, light scuff"
+      },
+      {
+        "task": "Sanding \u2014 heavy / patching",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 40,
+        "avg_rate": 75,
+        "fast_rate": 100,
+        "coats": "N/A",
+        "notes": "Joint compound, repairs"
+      },
+      {
+        "task": "Caulking",
+        "category": "SPECIALTY",
+        "unit": "LF/hr",
+        "slow_rate": 60,
+        "avg_rate": 100,
+        "fast_rate": 150,
+        "coats": "N/A",
+        "notes": "Standard interior caulk"
+      },
+      {
+        "task": "Surface cleaning",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 200,
+        "avg_rate": 350,
+        "fast_rate": 500,
+        "coats": "N/A",
+        "notes": "TSP wash or wipe-down"
+      },
+      {
+        "task": "Demolition \u2014 wallpaper removal",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 30,
+        "avg_rate": 60,
+        "fast_rate": 100,
+        "coats": "N/A",
+        "notes": "Depends on adhesive type"
+      },
+      {
+        "task": "Primer \u2014 spot prime patches",
+        "category": "SPECIALTY",
+        "unit": "SF/hr",
+        "slow_rate": 200,
+        "avg_rate": 300,
+        "fast_rate": 400,
+        "coats": "1",
+        "notes": "Spray or roll"
+      }
+    ],
+    "non_painting": [
+      {
+        "task": "Wallcovering / Wallpaper Install",
+        "unit": "$/SF (labor)",
+        "low_rate": "$1.50",
+        "market_rate": "$2.00-3.00",
+        "notes": "Commercial vinyl, Type II; base rate $2/SF, complex patterns higher"
+      },
+      {
+        "task": "Acoustical Wall Carpet (Sisal)",
+        "unit": "$/SF (labor)",
+        "low_rate": "$2.00",
+        "market_rate": "$2.50-3.50",
+        "notes": "Specialty install, adhesive-applied"
+      },
+      {
+        "task": "FRP Panel Installation",
+        "unit": "$/SF (installed)",
+        "low_rate": "$3.50",
+        "market_rate": "$5.00-8.00",
+        "notes": "Material + labor; labor portion ~$2-3/SF"
+      },
+      {
+        "task": "Tile \u2014 Floor (standard)",
+        "unit": "$/SF (labor)",
+        "low_rate": "$4.00",
+        "market_rate": "$6.00-10.00",
+        "notes": "Ceramic/porcelain, thin-set"
+      },
+      {
+        "task": "Tile \u2014 Wall",
+        "unit": "$/SF (labor)",
+        "low_rate": "$5.00",
+        "market_rate": "$7.00-12.00",
+        "notes": "More precision, slower install"
+      },
+      {
+        "task": "Restroom Partitions \u2014 Install",
+        "unit": "$/stall",
+        "low_rate": "$85",
+        "market_rate": "$100-125",
+        "notes": "30-45 min per stall for experienced installer"
+      },
+      {
+        "task": "Door & Frame Install",
+        "unit": "$/unit",
+        "low_rate": "$150",
+        "market_rate": "$200-350",
+        "notes": "Hollow core, pre-hung commercial"
+      },
+      {
+        "task": "Ceiling Grid / ACT Install",
+        "unit": "$/SF",
+        "low_rate": "$1.50",
+        "market_rate": "$2.50-4.00",
+        "notes": "2x4 grid + tile, standard height"
+      },
+      {
+        "task": "Framing \u2014 Metal Stud",
+        "unit": "$/SF",
+        "low_rate": "$3.00",
+        "market_rate": "$4.50-7.00",
+        "notes": "25-gauge, 16\" OC, standard height"
+      },
+      {
+        "task": "Drywall \u2014 Hang + Finish (L4)",
+        "unit": "$/SF",
+        "low_rate": "$1.50",
+        "market_rate": "$2.50-3.50",
+        "notes": "Hang, tape, mud, sand \u2014 complete"
+      },
+      {
+        "task": "Corner Guards",
+        "unit": "$/LF",
+        "low_rate": "$3.00",
+        "market_rate": "$5.00-8.00",
+        "notes": "Stainless or vinyl, installed"
+      },
+      {
+        "task": "Wood Trim / Caps / Chair Rail",
+        "unit": "$/LF",
+        "low_rate": "$3.00",
+        "market_rate": "$5.00-8.00",
+        "notes": "Poplar or MDF, installed and painted"
+      }
+    ]
+  },
+  "pricing_policy": {
+    "labor_rates": [
+      {
+        "role": "Painter (entry, 1-2 yrs)",
+        "hourly_wage": "$16-18/hr",
+        "burden_pct": "30-35%",
+        "burdened_rate": "$21-24/hr",
+        "market_comparison": "NC avg: $16-21/hr per ZipRecruiter/PayScale"
+      },
+      {
+        "role": "Painter (experienced, 3-5 yrs)",
+        "hourly_wage": "$19-23/hr",
+        "burden_pct": "30-35%",
+        "burdened_rate": "$25-31/hr",
+        "market_comparison": "NC avg: $21-25/hr per PayScale"
+      },
+      {
+        "role": "Lead / Foreman",
+        "hourly_wage": "$24-28/hr",
+        "burden_pct": "30-35%",
+        "burdened_rate": "$31-38/hr",
+        "market_comparison": "Manages crew, layout, quality"
+      }
+    ],
+    "unit_prices": [
+      {
+        "task": "Walls \u2014 2 coats, brush & roll",
+        "unit": "$/SF",
+        "floor_price": [
+          0.4,
+          0.4
+        ],
+        "target_price": [
+          0.55,
+          0.75
+        ],
+        "premium_price": [
+          0.85,
+          1.0
+        ],
+        "when_to_use": "Standard commercial repaint"
+      },
+      {
+        "task": "Walls \u2014 2 coats, spray",
+        "unit": "$/SF",
+        "floor_price": [
+          0.25,
+          0.25
+        ],
+        "target_price": [
+          0.35,
+          0.5
+        ],
+        "premium_price": [
+          0.55,
+          0.7
+        ],
+        "when_to_use": "New construction, open walls"
+      },
+      {
+        "task": "Walls \u2014 spray + back-roll",
+        "unit": "$/SF",
+        "floor_price": [
+          0.3,
+          0.3
+        ],
+        "target_price": [
+          0.45,
+          0.6
+        ],
+        "premium_price": [
+          0.65,
+          0.8
+        ],
+        "when_to_use": "When spec requires back-roll"
+      },
+      {
+        "task": "Ceilings \u2014 roll (2 coats)",
+        "unit": "$/SF",
+        "floor_price": [
+          0.5,
+          0.5
+        ],
+        "target_price": [
+          0.65,
+          0.85
+        ],
+        "premium_price": [
+          0.9,
+          1.1
+        ],
+        "when_to_use": "Overhead premium"
+      },
+      {
+        "task": "Ceilings \u2014 spray (2 coats)",
+        "unit": "$/SF",
+        "floor_price": [
+          0.3,
+          0.3
+        ],
+        "target_price": [
+          0.4,
+          0.55
+        ],
+        "premium_price": [
+          0.6,
+          0.75
+        ],
+        "when_to_use": "Open ceiling areas"
+      },
+      {
+        "task": "Trim / base / chair rail",
+        "unit": "$/LF",
+        "floor_price": [
+          0.8,
+          0.8
+        ],
+        "target_price": [
+          1.0,
+          1.5
+        ],
+        "premium_price": [
+          1.75,
+          2.25
+        ],
+        "when_to_use": "Standard brush work"
+      },
+      {
+        "task": "Doors \u2014 complete (2 sides + frame)",
+        "unit": "$/door",
+        "floor_price": [
+          50.0,
+          50.0
+        ],
+        "target_price": [
+          65.0,
+          85.0
+        ],
+        "premium_price": [
+          90.0,
+          120.0
+        ],
+        "when_to_use": "Standard commercial door"
+      },
+      {
+        "task": "Walls \u2014 spray (2 coats)",
+        "unit": "$/SF",
+        "floor_price": [
+          0.35,
+          0.35
+        ],
+        "target_price": [
+          0.5,
+          0.7
+        ],
+        "premium_price": [
+          0.8,
+          1.0
+        ],
+        "when_to_use": "Standard commercial exterior"
+      },
+      {
+        "task": "Walls \u2014 roll (2 coats)",
+        "unit": "$/SF",
+        "floor_price": [
+          0.5,
+          0.5
+        ],
+        "target_price": [
+          0.65,
+          0.85
+        ],
+        "premium_price": [
+          0.9,
+          1.1
+        ],
+        "when_to_use": "Where spray not feasible"
+      },
+      {
+        "task": "Pressure wash prep",
+        "unit": "$/SF",
+        "floor_price": [
+          0.08,
+          0.08
+        ],
+        "target_price": [
+          0.12,
+          0.18
+        ],
+        "premium_price": [
+          0.2,
+          0.25
+        ],
+        "when_to_use": "Before exterior paint"
+      },
+      {
+        "task": "Epoxy floor (2 coats)",
+        "unit": "$/SF",
+        "floor_price": [
+          1.5,
+          1.5
+        ],
+        "target_price": [
+          2.0,
+          3.0
+        ],
+        "premium_price": [
+          3.5,
+          4.5
+        ],
+        "when_to_use": "Garage, warehouse floors"
+      },
+      {
+        "task": "Stain \u2014 wood (2 coats)",
+        "unit": "$/SF",
+        "floor_price": [
+          0.6,
+          0.6
+        ],
+        "target_price": [
+          0.8,
+          1.1
+        ],
+        "premium_price": [
+          1.25,
+          1.5
+        ],
+        "when_to_use": "Cabinets, trim, paneling"
+      },
+      {
+        "task": "Texture application",
+        "unit": "$/SF",
+        "floor_price": [
+          0.3,
+          0.3
+        ],
+        "target_price": [
+          0.45,
+          0.6
+        ],
+        "premium_price": [
+          0.65,
+          0.8
+        ],
+        "when_to_use": "Knockdown, orange peel"
+      }
+    ],
+    "markup_scenarios": [
+      {
+        "scenario": "New GC \u2014 Must-Win Bid",
+        "markup_range": [
+          0.15,
+          0.2
+        ],
+        "margin_range": [
+          0.13,
+          0.17
+        ],
+        "when_to_apply": "First job with new GC. Goal: get on their bid list. Accept thin margin to build relationship."
+      },
+      {
+        "scenario": "Existing GC \u2014 Competitive Bid",
+        "markup_range": [
+          0.2,
+          0.25
+        ],
+        "margin_range": [
+          0.17,
+          0.2
+        ],
+        "when_to_apply": "We know the GC but are competing against other subs. Standard competitive bid."
+      },
+      {
+        "scenario": "Repeat GC \u2014 Invited Bid",
+        "markup_range": [
+          0.25,
+          0.35
+        ],
+        "margin_range": [
+          0.2,
+          0.26
+        ],
+        "when_to_apply": "GC invites us specifically. Some relationship premium. Still must be competitive."
+      },
+      {
+        "scenario": "Sole Source / Negotiated",
+        "markup_range": [
+          0.3,
+          0.4
+        ],
+        "margin_range": [
+          0.23,
+          0.29
+        ],
+        "when_to_apply": "We're the only bidder or negotiating directly. Maximum margin opportunity."
+      },
+      {
+        "scenario": "Large Project (>$200K)",
+        "markup_range": [
+          0.15,
+          0.2
+        ],
+        "margin_range": [
+          0.13,
+          0.17
+        ],
+        "when_to_apply": "Volume job. Lower margin, higher total dollars. Efficiency gains from scale."
+      },
+      {
+        "scenario": "Small Project (<$25K)",
+        "markup_range": [
+          0.3,
+          0.4
+        ],
+        "margin_range": [
+          0.23,
+          0.29
+        ],
+        "when_to_apply": "Mobilization costs are proportionally higher. Higher markup justified."
+      }
+    ],
+    "overhead": [
+      {
+        "item": "Vehicle (truck + gas + insurance)",
+        "monthly": "$800-1,200",
+        "annual": "$9,600-14,400",
+        "pct_of_revenue": "2-3%"
+      },
+      {
+        "item": "General Liability Insurance",
+        "monthly": "$300-500",
+        "annual": "$3,600-6,000",
+        "pct_of_revenue": "1%"
+      },
+      {
+        "item": "Workers' Comp Insurance",
+        "monthly": "In burden rate",
+        "annual": "In burden rate",
+        "pct_of_revenue": "In labor"
+      },
+      {
+        "item": "Tools & Equipment",
+        "monthly": "$200-400",
+        "annual": "$2,400-4,800",
+        "pct_of_revenue": "0.5-1%"
+      },
+      {
+        "item": "Office / Phone / Software",
+        "monthly": "$200-400",
+        "annual": "$2,400-4,800",
+        "pct_of_revenue": "0.5-1%"
+      },
+      {
+        "item": "Marketing / Branding",
+        "monthly": "$100-300",
+        "annual": "$1,200-3,600",
+        "pct_of_revenue": "0.5%"
+      },
+      {
+        "item": "TOTAL OVERHEAD",
+        "monthly": "$1,600-2,800",
+        "annual": "$19,200-33,600",
+        "pct_of_revenue": "4-7%"
+      }
+    ],
+    "bid_formula": [
+      "STEP 1: LABOR COST = Total SF \u00d7 (1 \u00f7 Production Rate SF/hr) \u00d7 Burdened Hourly Rate",
+      "STEP 2: MATERIAL COST = Total SF \u00f7 Coverage (SF/gal) \u00d7 Price per Gallon \u00d7 Number of Coats",
+      "STEP 3: DIRECT COST = Labor + Materials + Equipment Rental + Travel/Mobilization",
+      "STEP 4: OVERHEAD = Direct Cost \u00d7 Overhead % (target 10-15%)",
+      "STEP 5: BID PRICE = (Direct Cost + Overhead) \u00d7 (1 + Markup %)   \u2190 This is our number",
+      "EXAMPLE \u2014 10,000 SF Interior Repaint (2 coats, spray + back-roll, new drywall):"
+    ]
+  },
+  "source_file": "CC Finishes\\CCF-Pricing-Policy-Production-Rates.xlsx"
+}

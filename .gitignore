@@ -1,0 +1,120 @@
+# ─────────────────────────────────────────────────────────────────────
+# CRITICAL — NEVER COMMIT
+# ─────────────────────────────────────────────────────────────────────
+
+# Secrets / API credentials
+.env
+.env.*
+!.env.example
+data/config/cc_auth.json
+data/config/bc_auth.json
+data/config/bc_token.json
+data/config/bc_storage_state.json
+data/config/cc_session.json
+data/config/gdrive_auth.json
+data/config/gdrive_session.json
+data/config/takeoff_config.json
+data/config/parkway_auth.json
+data/config/procore_auth.json
+data/config/*token*
+data/config/*session*
+data/config/*credential*
+*service_account*.json
+*-private-key*.json
+
+# CRM data — customer info, bid amounts, all confidential
+data/memory/
+data/CRM-Bid-Log.xlsx
+data/proposals/
+data/projects/
+data/pending_followups/
+data/pending_followups_archive/
+data/cowork_imports/
+
+# Logs (may contain customer emails / chat content)
+data/logs/
+data/health/
+data/debug/
+data/reports/
+data/templates/email_signature*
+
+# Screenshots (may contain sensitive data)
+*.png
+!docs/**/*.png
+
+# Pending state / pidfiles
+*.pid
+*.lock
+*.heartbeat
+
+# ─────────────────────────────────────────────────────────────────────
+# Standard
+# ─────────────────────────────────────────────────────────────────────
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Claude Code session state — has shell command history with credentials
+.claude/
+.claude-code/
+
+# Node
+node_modules/
+
+# Backups
+*.bak
+*.bak2
+*.tmp
+
+# Test artifacts (the existing tests/ folder has screenshots + sample data)
+tests/*.png
+tests/*.html
+tests/test-estimate*.xlsx
+tests/test-estimate-output*
+tests/test-project*
+tests/sample_takeoff.json
+
+# Mempalace (operational memory — keep local)
+mempalace/
+
+# Carol's session memory — contains operational notes, GC names, bid amounts
+memory/
+
+# Customer-facing proposals (PDFs sent to GCs)
+data/templates/proposals/
+
+# OpenClaw runtime state (may snapshot conversations)
+.openclaw/
+openclaw.json
+
+# Backup files
+*.bak
+*.bak.*
+*.bak2
+*.bak-*
+
+# Email config templates with structure that may leak workflow details
+# (keep .example versions, not real configs)
+data/config/email_config.json
+
+# Togal / scraper artifacts
+togal_*.png
+togal_*.html
+
+# Activity log archives (may contain customer info)
+data/memory/activity_log_*.md

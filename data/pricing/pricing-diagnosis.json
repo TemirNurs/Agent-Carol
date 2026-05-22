@@ -1,0 +1,80 @@
+{
+  "source": "CCF-Pricing-Policy-Production-Rates.xlsx — Pricing Diagnosis sheet",
+  "generated": "2026-03-01",
+
+  "win_loss_summary": {
+    "total_won_contracts": 58,
+    "avg_won_contract": 76022,
+    "bids_submitted_2026": 24,
+    "avg_2026_bid": 161677,
+    "bid_to_won_ratio": 2.1,
+    "wins_from_last_20_estimating_bids": 0
+  },
+
+  "core_problem": "Our average 2026 bid ($161,677) is 2.1x our historical average won contract ($76,022). GC feedback confirms: Parkway said Hyatt bids were DOUBLE other bidders. Williams Company said 7% higher on Target Pineville. 20 estimating bids, zero wins. This is a pricing problem.",
+
+  "gc_feedback": [
+    {"project": "Target Pineville Remodel", "gc": "Williams Company", "feedback": "Came 2nd — 7% higher than winner", "gap": "~7%"},
+    {"project": "Parks on Reservoir, Harrisonburg VA", "gc": "Parkway", "feedback": "Our proposal was TWICE other proposals", "gap": "~100%"},
+    {"project": "Hyatt Select Charlotte", "gc": "Parkway", "feedback": "Told us our bid was double another company", "gap": "~100%"},
+    {"project": "Hyatt House Morrisville", "gc": "Parkway", "feedback": "Told us our bid was double another company", "gap": "~100%"},
+    {"project": "Target Lincolton NC", "gc": "LF Jennings", "feedback": "GC went different direction with owner", "gap": "Unknown"},
+    {"project": "Food Lion #0593 Winston-Salem", "gc": "WED Construction", "our_bid": 39911, "feedback": "WED didn't win the project", "gap": "GC lost"},
+    {"project": "OCTech Health Science", "gc": "CMC Building", "our_bid": 90027, "feedback": "CMC didn't win the project", "gap": "GC lost"}
+  ],
+
+  "root_causes": [
+    {"cause": "Labor Rate Too High", "detail": "If using $45-55/hr burdened but competitors use $28-35/hr (NC open-shop), 40-60% higher on largest cost component."},
+    {"cause": "Production Rates Too Slow", "detail": "If estimating 100-120 SF/hr but crews actually achieve 200-300 SF/hr (spray) or 150-200 SF/hr (roll), doubling labor hours."},
+    {"cause": "Overhead/Markup Stacked Too High", "detail": "30-40% overhead + 20-30% profit on already-inflated labor = 2x market."},
+    {"cause": "No Spray Efficiency", "detail": "Competitors spray open walls at 400-600 SF/hr. Estimating brush-and-roll rates for spray-eligible surfaces = 2-3x too high."},
+    {"cause": "Scope Pricing Mismatch", "detail": "Bidding multi-trade work with painting-company overhead when competitors specialize and price each trade leaner."}
+  ],
+
+  "won_contract_insights": [
+    "75% of won contracts are under $100K. Sweet spot is $25K-$100K projects.",
+    "35 of 58 won projects (60%) came through Parkway — but at OLDER pricing. Relationship carried us, not price.",
+    "Glenn Work projects averaged $44K — small, relationship-based jobs where price wasn't heavily compared.",
+    "Most profitable facility types: Cinema ($132K avg), Religious ($149K avg), Retail ($193K avg) — these are our strengths.",
+    "2021 was cheapest year ($27K avg). 2025 jumped to $108K avg — scope grew but so did price risk.",
+    "Haven't won a single new-GC bid in 2026. Every recent win came through existing relationships."
+  ],
+
+  "action_plan": {
+    "immediate": [
+      "Audit actual burdened labor rate — if over $35/hr, that's #1 problem. NC market is $25-32/hr.",
+      "Re-estimate one lost bid (Hyatt Select Charlotte) using corrected production rates. Should see 30-50% reduction.",
+      "Get crew timing data from Sergei — SF painted per hour by task. Real data beats rate tables.",
+      "Switch to spray-first estimating — default spray rates for open walls/ceilings, brush-and-roll only for cut-in and occupied."
+    ],
+    "short_term_30_days": [
+      "Build bid calculator (Carol IS this calculator now).",
+      "Separate paint vs. other trades pricing — don't apply painting overhead to tile/FRP/partition work.",
+      "Establish 3-tier pricing: Floor (must-win) / Target (competitive) / Premium (sole-source).",
+      "Track actual vs. estimated hours on every job — feedback loop to calibrate rates.",
+      "Re-bid 2-3 upcoming projects with new rates — compare old vs. new. If delta is 30-50%, we found the problem."
+    ],
+    "long_term_90_days": [
+      "Target 20-25% hit rate. Industry avg is 15-25%. Currently 0% on new bids.",
+      "Specialize bidding in Cinema, Religious, Senior Living, Retail — our strongest facility types.",
+      "Build GC-specific pricing — Parkway has different expectations than LF Jennings.",
+      "Invest in airless sprayer system ($2-5K) — pays for itself in 1-2 jobs.",
+      "Subcontract non-paint trades — markup sub work at 10-15%, not 25-35%."
+    ]
+  },
+
+  "pricing_rules_for_carol": {
+    "default_labor_rate": 28.00,
+    "spray_first": true,
+    "spray_first_explanation": "Always default to spray rates for open walls and ceilings. Only use brush-and-roll for cut-in, occupied spaces, and detailed trim work.",
+    "sweet_spot_range": [25000, 100000],
+    "strong_facility_types": ["cinema", "religious", "senior_living", "retail"],
+    "key_gc_relationships": ["Parkway", "Glenn Work", "WED Construction", "CMC Building"],
+    "target_hit_rate": 0.20,
+    "max_acceptable_blended_rate": {
+      "new_construction_interior": 1.00,
+      "repaint": 0.75,
+      "exterior": 0.60
+    }
+  }
+}

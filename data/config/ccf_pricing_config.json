@@ -1,0 +1,40 @@
+{
+  "labor": {
+    "burdened_rate": 28.0,
+    "unburdened_rate": 18.0,
+    "burden_pct": 0.556
+  },
+  "production_rates": {
+    "painting": {
+      "spray_backroll": {"slow_rate": 250, "avg_rate": 300, "fast_rate": 350, "unit": "SF/hr"},
+      "roll": {"slow_rate": 140, "avg_rate": 175, "fast_rate": 210, "unit": "SF/hr"},
+      "brush": {"slow_rate": 45, "avg_rate": 60, "fast_rate": 75, "unit": "SF/hr"},
+      "spray": {"slow_rate": 350, "avg_rate": 450, "fast_rate": 550, "unit": "SF/hr"},
+      "epoxy_roll": {"slow_rate": 80, "avg_rate": 100, "fast_rate": 120, "unit": "SF/hr"},
+      "wallcovering": {"slow_rate": null, "avg_rate": null, "fast_rate": null, "unit": "SF", "note": "Use $2.50/SF labor"}
+    },
+    "prep": {
+      "doors": {"slow_rate": 0.6, "avg_rate": 0.5, "fast_rate": 0.4, "unit": "hr/side"},
+      "frames": {"slow_rate": 0.4, "avg_rate": 0.33, "fast_rate": 0.25, "unit": "hr/frame"}
+    }
+  },
+  "pricing_policy": {
+    "overhead_pct": 0.12,
+    "markup_scenarios": [
+      {"name": "existing-competitive", "markup_pct": 0.22, "description": "Existing GC, competitive bid. TARGET tier."},
+      {"name": "new-competitive", "markup_pct": 0.20, "description": "New GC, competitive pricing."},
+      {"name": "aggressive", "markup_pct": 0.15, "description": "Must-win, aggressive. WED Construction, hotels."},
+      {"name": "standard", "markup_pct": 0.25, "description": "Standard jobs, new GCs, government."},
+      {"name": "premium", "markup_pct": 0.30, "description": "Solo bid, strong relationship, unique scope."}
+    ],
+    "default_markup": 0.22
+  },
+  "material_defaults": {
+    "primer_per_sf": 0.15,
+    "latex_eggshell_per_sf": 0.20,
+    "semi_gloss_per_sf": 0.25,
+    "epoxy_per_sf": 0.55,
+    "electrostatic_per_sf": 0.65,
+    "wallcovering_labor_per_sf": 2.50
+  }
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF Estimator — Dashboard</title>
+<style>
+  :root {
+    --blue: #1F4E79;
+    --blue-light: #D6E4F0;
+    --green: #27AE60;
+    --orange: #F39C12;
+    --red: #E74C3C;
+    --gray: #7F8C8D;
+    --bg: #F5F6FA;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+
+  .header {
+    background: var(--blue);
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  .header h1 { font-size: 1.4rem; letter-spacing: 2px; }
+  .header p { font-size: 0.85rem; opacity: 0.8; margin-top: 4px; }
+
+  .container { max-width: 800px; margin: 0 auto; padding: 16px; }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn-green { background: var(--green); }
+
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    cursor: pointer;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+  .card h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .card .meta { font-size: 0.85rem; color: var(--gray); }
+  .card .status {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .status-created { background: var(--blue-light); color: var(--blue); }
+  .status-sow { background: #FFF3CD; color: #856404; }
+  .status-takeoff { background: #FFF3CD; color: #856404; }
+  .status-estimate { background: #D4EDDA; color: #155724; }
+  .status-proposal { background: #D4EDDA; color: #155724; }
+  .status-sent { background: #CCE5FF; color: #004085; }
+  .status-complete { background: var(--green); color: white; }
+
+  .empty { text-align: center; padding: 40px; color: var(--gray); }
+  .section-title { font-size: 1.1rem; font-weight: 600; margin: 20px 0 12px; }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.1rem; }
+    .container { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>C A R O L I N A   C O M M E R C I A L   F I N I S H E S</h1>
+  <p>AI Estimating Agent — Carol</p>
+</div>
+
+<div class="container">
+  <a class="btn btn-green" href="new-project.html">+ New Project</a>
+
+  <div class="section-title">Active Projects</div>
+  <div id="active-projects"></div>
+
+  <div class="section-title">Completed</div>
+  <div id="completed-projects"></div>
+</div>
+
+<script>
+  // This page works with the OpenClaw agent via session messages.
+  // For now, it displays project data from localStorage or fetched from project_store.
+  // In production, this communicates via the OpenClaw WebSocket gateway.
+
+  const PROJECTS_KEY = 'ccf_projects';
+
+  function loadProjects() {
+    const stored = localStorage.getItem(PROJECTS_KEY);
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  function renderProjects() {
+    const projects = loadProjects();
+    const active = projects.filter(p => p.status !== 'complete');
+    const completed = projects.filter(p => p.status === 'complete');
+
+    const activeEl = document.getElementById('active-projects');
+    const completedEl = document.getElementById('completed-projects');
+
+    if (active.length === 0) {
+      activeEl.innerHTML = '<div class="empty">No active projects. Start a new one!</div>';
+    } else {
+      activeEl.innerHTML = active.map(p => `
+        <div class="card" onclick="location.href='project.html?id=${p.id}'">
+          <h3>${p.name}</h3>
+          <div class="meta">${p.gc || 'No GC'} · Due: ${p.due_date || 'TBD'} · ${p.pricing_tier || 'target'} tier</div>
+          <span class="status status-${p.status}">${p.status}</span>
+        </div>
+      `).join('');
+    }
+
+    if (completed.length === 0) {
+      completedEl.innerHTML = '<div class="empty">No completed projects yet.</div>';
+    } else {
+      completedEl.innerHTML = completed.map(p => `
+        <div class="card" onclick="location.href='project.html?id=${p.id}'">
+          <h3>${p.name}</h3>
+          <div class="meta">${p.gc || ''} · ${p.pricing_tier || 'target'} tier · Bid: $${(p.bid_price || 0).toLocaleString()}</div>
+          <span class="status status-complete">complete</span>
+        </div>
+      `).join('');
+    }
+  }
+
+  renderProjects();
+</script>
+</body>
+</html>
