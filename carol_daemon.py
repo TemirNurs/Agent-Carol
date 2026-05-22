@@ -206,6 +206,7 @@ class TaskRunner:
             "followup_intelligence_brief": self._followup_intelligence_brief,
             "lessons_audit": self._lessons_audit,
             "hallucination_sentry": self._hallucination_sentry,
+            "cleanup_project_docs": self._cleanup_project_docs,
             "crm_full_sync": self._crm_full_sync,
             "proposal_audit": self._proposal_audit,
             "cost_watchdog": self._cost_watchdog,
@@ -404,6 +405,13 @@ class TaskRunner:
     def _hallucination_sentry(self) -> str:
         """Hourly truth-check on Carol's answers. Pings Telegram if she lies."""
         return self._run_helper_script("_hallucination_sentry", [], timeout=120)
+
+    def _cleanup_project_docs(self) -> str:
+        """Weekly garbage collection — delete bid doc folders for closed
+        projects (Lost/Won/Withdrawn) older than 14 days. Recovers GBs of
+        disk on the Windows host."""
+        return self._run_helper_script("cleanup_project_docs",
+            ["--min-age", "14", "--apply", "--quiet"], timeout=600)
 
     def _proposal_audit(self) -> str:
         return self._run_helper_script("proposal_audit",

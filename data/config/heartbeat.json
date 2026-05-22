@@ -238,6 +238,14 @@
       "interval_minutes": 60,
       "description": "Ping Carol with truth-checkable questions and verify her answers vs ground truth files",
       "enabled": true
+    },
+    {
+      "name": "cleanup_project_docs",
+      "cron_day_of_week": 0,
+      "cron_hour": 3,
+      "cron_minute": 0,
+      "description": "Sunday 03:00 — delete bid doc folders for closed projects (Lost/Won/Withdrawn) older than 14 days",
+      "enabled": true
     }
   ]
 }
