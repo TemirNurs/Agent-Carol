@@ -1,0 +1,195 @@
+# ─────────────────────────────────────────────────────────────────────
+# CRITICAL — NEVER COMMIT
+# ─────────────────────────────────────────────────────────────────────
+
+# Secrets / API credentials
+.env
+.env.*
+!.env.example
+data/config/cc_auth.json
+data/config/bc_auth.json
+data/config/bc_token.json
+data/config/bc_storage_state.json
+data/config/cc_session.json
+data/config/gdrive_auth.json
+data/config/gdrive_session.json
+data/config/takeoff_config.json
+data/config/parkway_auth.json
+data/config/procore_auth.json
+data/config/togal_auth.json
+data/config/procore_state/
+data/config/*token*
+data/config/*session*
+data/config/*credential*
+data/config/*auth*
+data/config/*state*
+*service_account*.json
+*-private-key*.json
+
+# CRM data — customer info, bid amounts, all confidential
+data/memory/
+data/CRM-Bid-Log.xlsx
+data/proposals/
+data/projects/
+data/pending_followups/
+data/pending_followups_archive/
+data/cowork_imports/
+
+# ─────────────────────────────────────────────────────────────────────
+# Public-repo hardening (2026-06-29): operational/confidential content kept
+# out of the public showcase. The engineering stays; the data leaves.
+# ─────────────────────────────────────────────────────────────────────
+# Mined lessons + owner profile (saturated with team PII, client $, competitor intel)
+AGENTS_LESSONS.md
+USER.md
+# Pricing diagnosis + source workbook (named-GC feedback + win/loss financials)
+data/pricing/CCF-Pricing-Policy-Production-Rates.xlsx
+data/pricing/pricing-diagnosis.json
+# Bid-pipeline report snapshots (named projects + GC relationship strategy)
+daily_report_email.html
+email_text_version.txt
+# GC directory — third-party contact PII (loaded at runtime by _lib/gc.py)
+data/config/gc_directory.json
+# One-off seed/scratch scripts that hardcode confidential GC/client rosters + $
+scripts/update_gc_memory.py
+scripts/update_facility_memory.py
+scripts/update_gc_contacts.py
+scripts/_restore_target_rows.py
+scripts/_draft_proposals_to_ccf.py
+scripts/_delete_dupes_by_iid.py
+scripts/_fix_1336_attribution.py
+scripts/_fix_today_crm.py
+scripts/_resolve_savers_dup.py
+
+# Real client estimate workbooks (named client + address + bid $ + margins + SW acct #)
+data/templates/estimates/*.xlsx
+# Live CRM pointer (Google Sheet id) + proprietary pricing cost structure
+data/config/crm_sheet.json
+data/config/ccf_pricing_config.json
+data/pricing/ccf-pricing-config.json
+data/pricing/pricing_policy.json
+data/pricing/production_rates_db.json
+data/pricing/calibration_db.json
+data/pricing/loss_learning.json
+# Orphan daily-report snapshot (named pipeline + GC relationship strategy)
+send_report_email.py
+# Integration test scripts with real Google Drive resource ids
+tests/download_and_upload.py
+tests/download_cc_docs.py
+tests/download_barton_chapel.py
+# Operational CRM/config state (project/GC names, tiers, chase state)
+data/config/project_aliases.json
+data/config/garbage_projects.json
+data/config/gc_tiers.json
+data/config/no_chase.json
+data/config/chase_autopilot.json
+data/config/chase_until_reply.json
+data/config/audit_drift_seen.json
+# Scratch/bundle junk (never publish)
+page_*.txt
+*bundle*.txt
+arch_extract.txt
+output.txt
+err.txt
+
+# Logs (may contain customer emails / chat content)
+data/logs/
+data/health/
+data/debug/
+data/reports/
+data/templates/email_signature*
+
+# Screenshots (may contain sensitive data)
+*.png
+!docs/**/*.png
+
+# Pending state / pidfiles
+*.pid
+*.lock
+*.heartbeat
+
+# ─────────────────────────────────────────────────────────────────────
+# Standard
+# ─────────────────────────────────────────────────────────────────────
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Claude Code session state — has shell command history with credentials
+.claude/
+.claude-code/
+
+# Node
+node_modules/
+
+# Backups
+*.bak
+*.bak2
+*.tmp
+
+# Test artifacts (the existing tests/ folder has screenshots + sample data)
+tests/*.png
+tests/*.html
+tests/test-estimate*.xlsx
+tests/test-estimate-output*
+tests/test-project*
+tests/sample_takeoff.json
+
+# Mempalace (operational memory — keep local)
+mempalace/
+
+# Carol's session memory — contains operational notes, GC names, bid amounts
+memory/
+
+# Customer-facing proposals (PDFs sent to GCs)
+data/templates/proposals/
+
+# OpenClaw runtime state (may snapshot conversations)
+.openclaw/
+openclaw.json
+
+# Backup files
+*.bak
+*.bak.*
+*.bak2
+*.bak-*
+
+# Email config templates with structure that may leak workflow details
+# (keep .example versions, not real configs)
+data/config/email_config.json
+
+# Togal / scraper artifacts
+togal_*.png
+togal_*.html
+
+# Activity log archives (may contain customer info)
+data/memory/activity_log_*.md
+
+# Proprietary mined rate card (company-specific production/material/labor rates)
+data/pricing/PRODUCTION_RATES.md
+
+# Orphan report senders (stale hardcoded pipeline: named projects + GC relationships)
+/send_email.py
+/simple_email_sender.py
+# One-off estimate seed scripts (hardcode proprietary unit prices + labor/OH/markup)
+scripts/build_7eleven_estimate.py
+scripts/build_estimate.py
+# Deprecated legacy scripts (old followup/togal one-offs + vendor UUIDs)
+scripts/_legacy/
+# Debug scratch with a project-name roster
+scripts/_check_519_sends.py

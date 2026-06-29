@@ -1,0 +1,415 @@
+{
+  "tasks": [
+    {
+      "name": "scrape_bids",
+      "description": "Scrape CC + BC for new bids",
+      "interval_minutes": 30,
+      "enabled": true
+    },
+    {
+      "name": "geocode_distances",
+      "interval_minutes": 35,
+      "description": "Backfill distance_miles on active_bids.json for any new scrapes that have city/state but no computed distance. Runs ~5 min after scrape_bids.",
+      "enabled": true
+    },
+    {
+      "name": "check_email_bids",
+      "description": "Scan Gmail for bid invitations (log only)",
+      "interval_minutes": 17,
+      "enabled": true
+    },
+    {
+      "name": "ingest_email_invites",
+      "description": "Parse Gmail invitations -> add to active_bids.json",
+      "interval_minutes": 33,
+      "enabled": true
+    },
+    {
+      "name": "gmail_organize",
+      "description": "Apply Gmail labels (Lost/Follow-ups/Bid Invites/etc.)",
+      "interval_minutes": 65,
+      "enabled": true
+    },
+    {
+      "name": "track_submissions",
+      "description": "Detect submitted proposals from Sent folder, update bid status",
+      "interval_minutes": 59,
+      "enabled": true
+    },
+    {
+      "name": "crm_sync",
+      "description": "Pull CRM statuses (Won/Lost/Submitted/Awaiting) into Carol",
+      "interval_minutes": 120,
+      "enabled": true
+    },
+    {
+      "name": "gmail_rules_from_crm",
+      "description": "Regenerate Gmail labeling rules from CRM (runs before gmail_organize)",
+      "interval_minutes": 120,
+      "enabled": true
+    },
+    {
+      "name": "crm_writeback",
+      "description": "Push Carol's pipeline updates back to CRM Sheet (status changes, new bids)",
+      "interval_minutes": 31,
+      "enabled": true
+    },
+    {
+      "name": "proposal_audit",
+      "description": "Scan Sent folder, extract bid amounts, fill CRM Bid Amount columns",
+      "interval_minutes": 120,
+      "enabled": true
+    },
+    {
+      "name": "cost_watchdog",
+      "description": "Monitor daily Gemini spend; alert at $0.50, kill-switch at $1.50",
+      "interval_minutes": 53,
+      "enabled": true
+    },
+    {
+      "name": "crm_full_sync",
+      "description": "End-of-day full reconciliation: scrape + ingest + sync + writeback",
+      "cron_hour": 18,
+      "cron_minute": 0,
+      "enabled": true
+    },
+    {
+      "name": "daily_briefing",
+      "description": "Morning briefing + email report",
+      "cron_hour": 5,
+      "cron_minute": 0,
+      "enabled": true
+    },
+    {
+      "name": "followup_intelligence_brief",
+      "description": "Per-bid follow-up intelligence: who chased, who replied with what, next action plan",
+      "cron_hour": 5,
+      "cron_minute": 0,
+      "enabled": false,
+      "_disabled_reason": "Superseded by morning_chase_report.py (7AM) which has cleaner recap+propose+approve workflow. Two competing briefs at 5/7AM confused the user (5/26).",
+      "_disabled_at": "2026-05-26T08:30:00"
+    },
+    {
+      "name": "check_followups",
+      "description": "Check and notify about due follow-ups",
+      "cron_hour": 9,
+      "cron_minute": 0,
+      "enabled": false,
+      "_disabled_reason": "Superseded by chase_silent_followups \u2014 conflicting cadence + stale Bid# mapping",
+      "_disabled_at": "2026-05-13T11:06:12"
+    },
+    {
+      "name": "pipeline_advance",
+      "description": "Auto-advance projects with pending steps",
+      "interval_minutes": 5,
+      "enabled": true
+    },
+    {
+      "name": "bid_reminder_morning",
+      "description": "Telegram morning brief (today + tomorrow bids)",
+      "cron_hour": 7,
+      "cron_minute": 0,
+      "enabled": true
+    },
+    {
+      "name": "bid_reminder_imminent",
+      "description": "Telegram afternoon check for sweet-spot bids due today",
+      "cron_hour": 14,
+      "cron_minute": 0,
+      "enabled": true
+    },
+    {
+      "name": "bid_reminder_new",
+      "description": "Telegram alert for new strong-match bids (runs hourly)",
+      "interval_minutes": 61,
+      "enabled": true
+    },
+    {
+      "name": "cowork_sync",
+      "description": "Pull claude.ai conversations + index into MemPalace",
+      "cron_hour": 5,
+      "cron_minute": 30,
+      "enabled": true
+    },
+    {
+      "name": "import_cowork",
+      "description": "Index manually-dropped exports in data/cowork_imports/",
+      "interval_minutes": 37,
+      "enabled": true
+    },
+    {
+      "name": "cowork_local",
+      "description": "Index local Claude Cowork sessions (desktop app)",
+      "interval_minutes": 60,
+      "enabled": true
+    },
+    {
+      "name": "sync_openclaw",
+      "description": "Sync Carol AGENTS.md/USER.md to OpenClaw workspace (Telegram agent)",
+      "interval_minutes": 10,
+      "enabled": true
+    },
+    {
+      "name": "loss_postmortem_watch",
+      "description": "Auto-investigate newly Lost bids: postmortem + Notes + Telegram",
+      "interval_minutes": 240,
+      "enabled": true
+    },
+    {
+      "name": "process_followup_replies",
+      "description": "Auto-classify Inbox replies to follow-ups, update CRM, Telegram ping",
+      "interval_minutes": 35,
+      "enabled": true
+    },
+    {
+      "name": "crm_daily_summary",
+      "description": "CRM status breakdown \u2014 morning briefing",
+      "cron_hour": 7,
+      "cron_minute": 30,
+      "enabled": true
+    },
+    {
+      "name": "crm_daily_summary",
+      "description": "CRM status breakdown \u2014 end-of-day recap",
+      "cron_hour": 18,
+      "cron_minute": 0,
+      "enabled": true
+    },
+    {
+      "name": "followup_scheduler",
+      "description": "Cadence engine: auto-FU + auto-close + phone flag",
+      "cron_hour": 8,
+      "cron_minute": 0,
+      "enabled": false,
+      "_disabled_reason": "Superseded by chase_silent_followups \u2014 conflicting cadence + stale Bid# mapping",
+      "_disabled_at": "2026-05-13T11:06:12"
+    },
+    {
+      "name": "daemon_self_health",
+      "description": "Refresh daemon heartbeat file for external watchdog",
+      "interval_minutes": 3,
+      "enabled": true
+    },
+    {
+      "name": "team_chat_audit",
+      "description": "Snapshot team Telegram transcripts (owner audit)",
+      "cron_hour": 18,
+      "cron_minute": 30,
+      "enabled": true
+    },
+    {
+      "name": "scrape_parkway",
+      "description": "Scrape Parkway Construction portal (top GC) for nearby projects",
+      "interval_minutes": 67,
+      "enabled": true
+    },
+    {
+      "name": "scrape_procore",
+      "description": "Scrape Procore sub bid invitations",
+      "interval_minutes": 71,
+      "enabled": true
+    },
+    {
+      "name": "team_chat_watcher",
+      "description": "Real-time Telegram alert when teammate messages Carol",
+      "interval_minutes": 3,
+      "enabled": true
+    },
+    {
+      "name": "chase_command_watcher",
+      "description": "Act on owner's Telegram chase commands (approve/pause/resume) \u2014 clears the approval gate so chases send on the user's word",
+      "interval_minutes": 2,
+      "enabled": true
+    },
+    {
+      "name": "chase_silent_followups",
+      "description": "Aggressive retry loop: keeps following up non-responders at days 3/7/14/21 until reply or 5 attempts",
+      "cron_hour": 10,
+      "cron_minute": 30,
+      "enabled": false,
+      "_disabled_reason": "Conflicting cadence with manual chase batches AND uses hard close-out language by attempt 11 (one GC contact got 'closing this out today' language on attempt 11 — user vetoed). Needs softer-tone templates + coordination with manual sends before re-enabling.",
+      "_disabled_at": "2026-05-25T11:42:00"
+    },
+    {
+      "name": "forward_div27",
+      "interval_minutes": 45,
+      "description": "Auto-forward Division 27 (Communications/Low-Voltage/AV) bid invites to Hyperscale Wiring",
+      "enabled": true
+    },
+    {
+      "name": "apply_crm_formatting",
+      "interval_minutes": 25,
+      "description": "Re-apply Sort Priority formula + sort sheet so newly added bids stay on top",
+      "enabled": true
+    },
+    {
+      "name": "lessons_audit",
+      "cron_hour": 6,
+      "cron_minute": 0,
+      "description": "Verify Carol's code complies with AGENTS_LESSONS.md rules \u2014 catch regressions before user notices",
+      "enabled": true
+    },
+    {
+      "name": "hallucination_sentry",
+      "interval_minutes": 60,
+      "description": "Ping Carol with truth-checkable questions and verify her answers vs ground truth files",
+      "enabled": true
+    },
+    {
+      "name": "backfill_chase_history",
+      "interval_minutes": 47,
+      "description": "Sync Gmail Sent follow-ups -> bid_status.json so chase counts stay accurate (ground truth, not stale cache)",
+      "enabled": true
+    },
+    {
+      "name": "morning_chase_report",
+      "cron_hour": 7,
+      "cron_minute": 0,
+      "description": "Daily 7AM: yesterday's chase recap + today's proposed plan -> Telegram. User must approve before any chases fire.",
+      "enabled": true
+    },
+    {
+      "name": "rebuild_known_recipient_domains",
+      "cron_hour": 4,
+      "cron_minute": 30,
+      "description": "Daily 4:30 AM: refresh trusted recipient-domains cache from Gmail Inbox FROM so send_email.py can catch typo'd domains (e.g. newcoconstruction.co vs .com)",
+      "enabled": true
+    },
+    {
+      "name": "audit_chase_subject_ids",
+      "interval_minutes": 360,
+      "description": "Detect MIS-TAGGED outbound subjects ([ID:] tag resolves to a project unrelated to the subject = would misroute a reply). Stale Bid# is logged but harmless (routing uses [ID:] tag + domain, not Bid#). Pings owner ONCE per NEW mis-tag only (deduped); never re-pings historical ones.",
+      "enabled": true
+    },
+    {
+      "name": "cleanup_project_docs",
+      "cron_day_of_week": 0,
+      "cron_hour": 3,
+      "cron_minute": 0,
+      "description": "Sunday 03:00 \u2014 delete bid doc folders for closed projects (Lost/Won/Withdrawn) older than 14 days",
+      "enabled": true
+    },
+    {
+      "name": "self_audit",
+      "description": "Nightly self-audit: CRM vs Sent Mail vs chase-state, Telegram digest of mismatches",
+      "cron_hour": 4,
+      "cron_minute": 30,
+      "enabled": true
+    },
+    {
+      "name": "dashboard_keepalive",
+      "description": "Keep pipeline dashboard alive on 127.0.0.1:8765",
+      "interval_minutes": 10,
+      "enabled": true
+    },
+    {
+      "name": "cowork_agent_index",
+      "description": "Index desktop Cowork-tab estimating sessions into MemPalace (incremental)",
+      "cron_hour": 21,
+      "cron_minute": 30,
+      "enabled": true
+    },
+    {
+      "name": "loss_learning_digest",
+      "description": "Weekly loss-learning rebuild + Telegram digest (Mon 06:30)",
+      "cron_hour": 6,
+      "cron_minute": 30,
+      "cron_day_of_week": 0,
+      "enabled": true
+    },
+    {
+      "name": "direct_ask_watcher",
+      "description": "Win-channel fast lane: GC direct pricing asks -> URGENT ping (30min cadence)",
+      "interval_minutes": 30,
+      "enabled": true
+    },
+    {
+      "name": "morning_bid_brief",
+      "description": "6AM opener: top-3 due TODAY + tomorrow preview -> Telegram (05:45)",
+      "cron_hour": 5,
+      "cron_minute": 45,
+      "enabled": true
+    },
+    {
+      "name": "weekly_bid_plan",
+      "description": "Daily 05:35: Mon fresh week plan; Tue-Fri re-audit (lock past days, swap in better newcomers)",
+      "cron_hour": 5,
+      "cron_minute": 35,
+      "enabled": true
+    },
+    {
+      "name": "chase_executor",
+      "description": "AUTOPILOT: execute morning chase plan w/ 10-layer guard stack (08:45, Mon-Fri gate internal)",
+      "cron_hour": 8,
+      "cron_minute": 45,
+      "enabled": true
+    },
+    {
+      "name": "pbi_refresh",
+      "description": "PBI: ensure dossiers + enqueue Claude-read queue + revalue + index (no LLM/no downloads)",
+      "interval_minutes": 45,
+      "enabled": true
+    },
+    {
+      "name": "pbi_self_audit",
+      "description": "PBI: provenance/freshness/blocked-surfaced fail-loud audit",
+      "interval_minutes": 1440,
+      "enabled": true
+    },
+    {
+      "name": "fetch_worker",
+      "description": "Run queued background doc-fetch jobs (enqueue_fetch) + push result to requester on completion",
+      "interval_minutes": 3,
+      "enabled": true
+    },
+    {
+      "name": "deadbid_guard",
+      "description": "Daily: close dead bids (we-owe past GC deadline / >10d stale) so corpses never reach the chase/draft path",
+      "interval_minutes": 1440,
+      "enabled": true
+    },
+    {
+      "name": "inbox_monitor",
+      "description": "ALWAYS-ON: LLM thread-comprehension of new GC mail -> live per-bid state + owner alerts on WON/LOST/WE-OWE",
+      "interval_minutes": 5,
+      "enabled": true
+    },
+    {
+      "name": "pbi_sync",
+      "description": "LIVE PBI: best real value per active bid -> data/memory/pbi_state.json + sync estimates into dossiers",
+      "interval_minutes": 40,
+      "enabled": true
+    },
+    {
+      "name": "stage2_pick",
+      "description": "LIVE pick intelligence: scope-sniff open in-radius opportunities -> CCF-scope value + BID/MAYBE/PASS -> data/memory/pick_state.json",
+      "interval_minutes": 60,
+      "enabled": true
+    },
+    {
+      "name": "pbi_deepen",
+      "description": "KNOW the projects: fetch next open in-radius bid docs -> read RFP/finishes on Claude -> real scope+value into dossier + deep_knowledge.json (1/run, worth-first)",
+      "interval_minutes": 30,
+      "enabled": true
+    },
+    {
+      "name": "verified_intelligence",
+      "description": "Live-fetch missing docs + verify-read real scope + re-rank all open projects. HOURLY (6/29) so the verified truth stays close to the live scrape cache; Telegram answers read this store.",
+      "interval_minutes": 60,
+      "enabled": true
+    },
+    {
+      "name": "learn_from_interactions",
+      "description": "Daily 23:30: mine the day's CLI + Telegram transcripts for Nursultan's corrections/teachings/praise -> distill durable lessons (claude-code) -> dedup -> append new ones to AGENTS_LESSONS.md + ledger + digest. Carol's automatic learning loop.",
+      "cron_hour": 23,
+      "cron_minute": 30,
+      "enabled": true
+    },
+    {
+      "name": "claude_sub_shim",
+      "description": "Keepalive: ensure the Claude Max-subscription shim (127.0.0.1:8199) is up so Telegram-Carol runs on Opus 4.8 via the subscription (free); relaunch detached if down, else she falls back to Gemini.",
+      "interval_minutes": 5,
+      "enabled": true
+    }
+  ]
+}

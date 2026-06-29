@@ -1,0 +1,22 @@
+{
+  "_comment": "Claude Projects whose conversations should NEVER be indexed into Carol's memory. Carol is the CCF estimating assistant — personal/unrelated Claude projects (Cable Venture, Migra Bot, parenting, sports, etc.) just pollute her recall. Match is case-insensitive substring on the Claude Project name.",
+  "exclude_project_names": [
+    "Cable Venture",
+    "Migra Bot",
+    "Pearl",
+    "Parenting TikTok",
+    "2026 worldcup football",
+    "Immigration Lawyer",
+    "Tax 2025"
+  ],
+  "exclude_project_keywords": [
+    "tiktok",
+    "worldcup",
+    "world cup",
+    "personal",
+    "immigration",
+    "tax 20",
+    "tax-20"
+  ],
+  "_to_add_more": "Append to either list above and Carol's next cowork sync (every 30-60 min) will skip them. No restart needed."
+}

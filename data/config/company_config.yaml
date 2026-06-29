@@ -1,0 +1,97 @@
+# ============================================================================
+# company_config.yaml — THE single file a company edits to run Carol.
+# Everything company-specific lives here. Code must read these via
+# scripts/_lib/company.py — never hardcode company values in scripts.
+# Env vars still override (e.g. GMAIL_USER beats email.sender).
+# ============================================================================
+
+company:
+  name: "Carolina Commercial Finishes"
+  short_name: "CCF"
+  website: "CarolinaCommercialFinishes.com"
+  address: "3308 Chancellor Lane, Monroe, NC 28110"
+  phone: "(980) 348-1827"
+
+email:
+  # The mailbox Carol operates (IMAP + SMTP)
+  sender: "estimates@carolinacommercialfinishes.com"
+  # The owner's address — user-facing reports/sends go here
+  owner: "cs@carolinacommercialfinishes.com"
+  # CC'd on every external send. Personal team addresses are NOT stored here —
+  # set the full list (company address + team) in CCF_INTERNAL_CC in .env, which
+  # _lib/company.internal_cc_list() reads first. This keeps personal emails out
+  # of the tracked repo. The company address below is the safe public default.
+  internal_cc:
+    - "cs@carolinacommercialfinishes.com"
+  # Treat mail involving these substrings as internal/own traffic. Personal
+  # handles come from CCF_OWN_DOMAINS in .env (env overrides this list).
+  own_domains:
+    - "carolinacommercialfinishes"
+
+team:
+  # Real names live in .env if needed; tracked config uses role labels only.
+  owner: "Owner"
+  estimator: "Estimator"
+  accountant: "Accountant"
+
+trade:
+  # What we bid (gates email-invite ingestion; "all trades" ITBs always pass)
+  # MULTI-TRADE 6/10: the only WON contract was carpentry (wood caps) + toilet
+  # partitions — not painting. Specialties are first-class trades now.
+  our_keywords:
+    - "paint"
+    - "wallcover"
+    - "wall cover"
+    - "finishes"
+    - "all trades"
+    - "main trades"
+    - "drywall"
+    - "gypsum"
+    - "09 9"
+    - "099"
+    - "wood cap"
+    - "carpentry"
+    - "millwork"
+    - "casework"
+    - "frp"
+    - "toilet partition"
+    - "restroom partition"
+    - "toilet accessories"
+    - "bath accessories"
+    - "wall protection"
+    - "corner guard"
+    - "division 6"
+    - "division 10"
+    - "specialties"
+  # Clearly-not-our-trade invites get dropped (dual-company inbox guard)
+  reject_keywords:
+    - "voice, data"
+    - "telecommunication"
+    - "low voltage"
+    - "structured cabling"
+    - "cctv"
+    - "security & cctv"
+    - "access control"
+    - "audiovisual"
+    - "av systems"
+  default_trade_label: "Painting"
+
+location:
+  hq_city: "Monroe"
+  hq_state: "NC"
+  hq_lat: 34.9854
+  hq_lon: -80.5495
+  home_states: ["NC", "SC", "GA", "FL"]  # per _Core/CLAUDE.md home market; TN/VA = out-of-market
+  local_radius_miles: 120
+
+bidding:
+  min_project_usd: 50000      # standing floor (user may override per week)
+  sweet_spot_usd: [50000, 100000]
+  priority_usd: 100000
+
+crm:
+  sheet_name: "Bid Log"
+
+telegram:
+  bot_token_env: "TELEGRAM_BOT_TOKEN"
+  chat_id_env: "USER_TELEGRAM_CHAT_ID"

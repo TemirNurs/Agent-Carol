@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF — New Project</title>
+<style>
+  :root {
+    --blue: #1F4E79;
+    --blue-light: #D6E4F0;
+    --green: #27AE60;
+    --bg: #F5F6FA;
+    --white: #FFFFFF;
+    --text: #2C3E50;
+    --gray: #7F8C8D;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+
+  .header {
+    background: var(--blue);
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header a { color: white; text-decoration: none; font-size: 1.2rem; }
+  .header h1 { font-size: 1.1rem; }
+
+  .container { max-width: 600px; margin: 0 auto; padding: 16px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #DDD;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--blue);
+    outline: none;
+  }
+
+  .tier-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .tier-option {
+    padding: 12px;
+    border: 2px solid #DDD;
+    border-radius: var(--radius);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tier-option:hover { border-color: var(--blue); }
+  .tier-option.selected { border-color: var(--blue); background: var(--blue-light); }
+  .tier-option .label { font-weight: 600; font-size: 0.95rem; }
+  .tier-option .desc { font-size: 0.75rem; color: var(--gray); margin-top: 4px; }
+
+  .file-drop {
+    border: 2px dashed #CCC;
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .file-drop:hover, .file-drop.dragover { border-color: var(--blue); background: var(--blue-light); }
+  .file-drop input { display: none; }
+  .file-list { margin-top: 8px; font-size: 0.85rem; }
+  .file-list .file-item { padding: 4px 0; color: var(--text); }
+
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:disabled { background: var(--gray); cursor: not-allowed; }
+
+  .markup-info {
+    background: var(--blue-light);
+    border-radius: var(--radius);
+    padding: 12px;
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="index.html">&larr;</a>
+  <h1>New Project</h1>
+</div>
+
+<div class="container">
+  <form id="project-form">
+    <div class="form-group">
+      <label>Project Name *</label>
+      <input type="text" id="name" placeholder="e.g. Food Lion 1513 Remodel" required>
+    </div>
+
+    <div class="form-group">
+      <label>General Contractor</label>
+      <input type="text" id="gc" placeholder="e.g. WED Construction">
+    </div>
+
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" id="location" placeholder="e.g. Asheboro, NC">
+    </div>
+
+    <div class="form-group">
+      <label>Bid Due Date</label>
+      <input type="date" id="due-date">
+    </div>
+
+    <div class="form-group">
+      <label>Pricing Tier</label>
+      <div class="tier-options">
+        <div class="tier-option" data-tier="floor" onclick="selectTier(this)">
+          <div class="label">Floor</div>
+          <div class="desc">Break-even. Must-win.</div>
+        </div>
+        <div class="tier-option selected" data-tier="target" onclick="selectTier(this)">
+          <div class="label">Target</div>
+          <div class="desc">Competitive bid.</div>
+        </div>
+        <div class="tier-option" data-tier="premium" onclick="selectTier(this)">
+          <div class="label">Premium</div>
+          <div class="desc">Relationship price.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Markup Scenario</label>
+      <select id="markup-scenario">
+        <option value="existing-competitive">Existing GC — Competitive Bid (20-25%)</option>
+        <option value="new-gc">New GC — Must-Win (15-20%)</option>
+        <option value="repeat-invited">Repeat GC — Invited Bid (25-35%)</option>
+        <option value="sole-source">Sole Source / Negotiated (30-40%)</option>
+        <option value="large">Large Project >$200K (15-20%)</option>
+        <option value="small">Small Project <$25K (30-40%)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Bid Documents (PDFs, Plans, Specs)</label>
+      <div class="file-drop" id="file-drop" onclick="document.getElementById('file-input').click()">
+        <input type="file" id="file-input" multiple accept=".pdf,.xlsx,.csv,.xls,.doc,.docx">
+        <div>Tap to upload or drag files here</div>
+        <div style="font-size:0.8rem; margin-top:4px">PDF plans, specs, scope letters, takeoff files</div>
+      </div>
+      <div class="file-list" id="file-list"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea id="notes" rows="3" placeholder="Any special instructions, conditions, or notes..."></textarea>
+    </div>
+
+    <button type="submit" class="btn" id="submit-btn">Create Project & Start Estimating</button>
+  </form>
+</div>
+
+<script>
+  let selectedTier = 'target';
+  let uploadedFiles = [];
+
+  function selectTier(el) {
+    document.querySelectorAll('.tier-option').forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTier = el.dataset.tier;
+  }
+
+  // File handling
+  const fileDrop = document.getElementById('file-drop');
+  const fileInput = document.getElementById('file-input');
+  const fileList = document.getElementById('file-list');
+
+  fileDrop.addEventListener('dragover', e => { e.preventDefault(); fileDrop.classList.add('dragover'); });
+  fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
+  fileDrop.addEventListener('drop', e => {
+    e.preventDefault();
+    fileDrop.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+  });
+  fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+  function handleFiles(files) {
+    for (const f of files) {
+      uploadedFiles.push(f);
+    }
+    renderFiles();
+  }
+
+  function renderFiles() {
+    fileList.innerHTML = uploadedFiles.map((f, i) =>
+      `<div class="file-item">${f.name} (${(f.size/1024).toFixed(0)} KB)</div>`
+    ).join('');
+  }
+
+  // Form submission — sends message to OpenClaw agent
+  document.getElementById('project-form').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const project = {
+      id: slugify(document.getElementById('name').value),
+      name: document.getElementById('name').value,
+      gc: document.getElementById('gc').value,
+      location: document.getElementById('location').value,
+      due_date: document.getElementById('due-date').value,
+      pricing_tier: selectedTier,
+      markup_scenario: document.getElementById('markup-scenario').value,
+      notes: document.getElementById('notes').value,
+      files: uploadedFiles.map(f => f.name),
+      status: 'created',
+      created_at: new Date().toISOString(),
+    };
+
+    // Save to localStorage
+    const projects = JSON.parse(localStorage.getItem('ccf_projects') || '[]');
+    projects.push(project);
+    localStorage.setItem('ccf_projects', JSON.stringify(projects));
+
+    // In OpenClaw: send message to agent session
+    // window.openclaw.send(`New project: ${project.name}, GC: ${project.gc}, Tier: ${project.pricing_tier}`);
+
+    alert(`Project "${project.name}" created! Tell Carol to start the estimate.`);
+    location.href = 'index.html';
+  });
+
+  function slugify(s) {
+    return s.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
+  }
+</script>
+</body>
+</html>
