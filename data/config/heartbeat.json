@@ -218,7 +218,7 @@
     {
       "name": "chase_command_watcher",
       "description": "Act on owner's Telegram chase commands (approve/pause/resume) \u2014 clears the approval gate so chases send on the user's word",
-      "interval_minutes": 2,
+      "interval_minutes": 1,
       "enabled": true
     },
     {
