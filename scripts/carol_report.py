@@ -24,7 +24,7 @@ REPORTS = {
     "yesterday": ["recap.py", "--yesterday"],
     "stats":     ["bid_stats.py", "--brief"],
     "today":     ["bids_today.py"],
-    "chases":    ["morning_chase_report.py"],     # read-only: proposes, never sends
+    "chases":    ["morning_chase_report.py", "--quiet"],  # read-only: proposes, never sends
     "team":      ["team_transcript.py", "--ever"],  # who has ever messaged Carol
 }
 
