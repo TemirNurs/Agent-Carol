@@ -16,6 +16,7 @@ HOW IT WORKS
   the latest the subscription serves). So this delivers Opus the CLI backend can't.
 """
 import json
+import os
 import subprocess
 import sys
 import time
@@ -56,9 +57,16 @@ def run_claude(messages, model):
     if sys_parts:
         prompt = "\n\n".join(sys_parts) + "\n\n" + prompt
     args = [CLAUDE_EXE, "-p", "--output-format", "json", "--model", model]
+    # CRITICAL: strip any inherited ANTHROPIC_API_KEY / auth-token / base-url so
+    # claude.exe uses the ~/.claude Max SUBSCRIPTION OAuth (free), NOT a paid API
+    # key. A stray dead/no-credit ANTHROPIC_API_KEY in the machine env (which the
+    # daemon-spawned shim inherits) otherwise hijacks claude.exe onto the paid API
+    # and every reply becomes "Credit balance is too low".
+    env = {k: v for k, v in os.environ.items()
+           if k not in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_BASE_URL")}
     try:
         r = subprocess.run(args, input=prompt, capture_output=True, text=True,
-                           timeout=TIMEOUT, encoding="utf-8", errors="replace")
+                           timeout=TIMEOUT, encoding="utf-8", errors="replace", env=env)
     except subprocess.TimeoutExpired:
         return "(claude subscription timed out)"
     out = (r.stdout or "").strip()
