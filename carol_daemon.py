@@ -96,6 +96,12 @@ DEFAULT_TASKS = [
         "enabled": True,
     },
     {
+        "name": "build_report_snapshots",
+        "description": "Render read-only reports (chases/open/recap/stats/today) to data/memory/report_cache/*.txt for Telegram-Carol to READ (OpenClaw can't exec)",
+        "interval_minutes": 12,
+        "enabled": True,
+    },
+    {
         "name": "learn_from_interactions",
         "description": "Mine the day's transcripts for Nursultan's corrections/teachings → distill + save new lessons",
         "cron_hour": 23,
@@ -267,6 +273,7 @@ class TaskRunner:
             "pbi_refresh": self._pbi_refresh,
             "pbi_self_audit": self._pbi_self_audit,
             "verified_intelligence": self._verified_intelligence,
+            "build_report_snapshots": self._build_report_snapshots,
             "learn_from_interactions": self._learn_from_interactions,
             "claude_sub_shim": self._claude_sub_shim,
         }
@@ -471,6 +478,12 @@ class TaskRunner:
 
     def _gmail_organize(self) -> str:
         return self._run_helper_script("gmail_organize", ["--quiet"], timeout=600)
+
+    def _build_report_snapshots(self) -> str:
+        """Render the read-only reports to data/memory/report_cache/*.txt so the
+        Telegram agent can READ them (OpenClaw's allowlist exec blocks the .cmd
+        runner). Read-only — cannot send or need approval. See [[reference_openclaw_runtime]]."""
+        return self._run_helper_script("build_report_snapshots", [], timeout=600)
 
     def _track_submissions(self) -> str:
         return self._run_helper_script("track_submissions", ["--quiet", "--days", "30"], timeout=300)

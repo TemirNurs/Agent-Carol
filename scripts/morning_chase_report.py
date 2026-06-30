@@ -1032,8 +1032,9 @@ def main():
     if proposed:
         lines.append("")
         lines.append(f"📋 *Today's Proposed Chase Plan — {today.strftime('%a %b %d')}*")
-        lines.append(f"_{len(proposed)} eligible bid(s). NOTHING sends until you "
-                     f"approve — reply 'approve' to authorize today's batch (gate is live)._")
+        lines.append(f"_{len(proposed)} eligible bid(s). This is a READ-ONLY plan — "
+                     f"auto-send is OFF (draft-only). Nothing sends. Draft & send any of "
+                     f"these yourself when you're ready._")
         lines.append("")
         for p in proposed[:30]:
             amt_disp = f"${p['amount']:,}" if p['amount'] else "$?"

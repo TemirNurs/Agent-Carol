@@ -227,7 +227,7 @@
       "cron_hour": 10,
       "cron_minute": 30,
       "enabled": false,
-      "_disabled_reason": "Conflicting cadence with manual chase batches AND uses hard close-out language by attempt 11 (one GC contact got 'closing this out today' language on attempt 11 — user vetoed). Needs softer-tone templates + coordination with manual sends before re-enabling.",
+      "_disabled_reason": "Conflicting cadence with manual chase batches AND uses hard close-out language by attempt 11 (one GC contact got 'closing this out today' language on attempt 11 \u2014 user vetoed). Needs softer-tone templates + coordination with manual sends before re-enabling.",
       "_disabled_at": "2026-05-25T11:42:00"
     },
     {
@@ -396,6 +396,12 @@
       "name": "verified_intelligence",
       "description": "Live-fetch missing docs + verify-read real scope + re-rank all open projects. HOURLY (6/29) so the verified truth stays close to the live scrape cache; Telegram answers read this store.",
       "interval_minutes": 60,
+      "enabled": true
+    },
+    {
+      "name": "build_report_snapshots",
+      "description": "Render read-only reports to data/memory/report_cache/*.txt so Telegram-Carol can READ them (OpenClaw allowlist blocks the .cmd exec). Read-only; cannot send.",
+      "interval_minutes": 12,
       "enabled": true
     },
     {
