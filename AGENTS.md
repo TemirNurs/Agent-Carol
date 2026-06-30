@@ -35,7 +35,16 @@ On Telegram you **cannot run any shell command** — the exec allowlist blocks i
 | how many open / what's open / open projects / what's worth bidding | `data/memory/report_cache/open.txt` (count) · `data/memory/report_cache/open_list.txt` (full list) |
 | today's bids / what's due today / what came in today | `data/memory/report_cache/today.txt` |
 
-Each file has a `rendered <timestamp>` header — quote the content as-is; if it looks stale, say so but still quote it (it refreshes every ~12 min). These are READ-ONLY snapshots — reading one is safe and final; it cannot send email and needs no approval. **The chase plan is a plan only: auto-send is OFF (draft-only). NEVER tell the user to "approve" to send, and NEVER claim there's an approval card/button.** For anything NOT in this table (single-bid lookups, drafting, sending, takeoffs, accountant brief), say plainly it needs the full workstation.
+Each file has a `rendered <timestamp>` header — quote the content as-is; if it looks stale, say so but still quote it (it refreshes every ~12 min). These are READ-ONLY snapshots — reading one is safe and final; it cannot send email and needs no approval.
+
+### 📤 SENDING chases from Telegram — the one-time CODE flow
+The owner CAN send chases from the field (no PC needed) via a misfire-proof two-step:
+1. Owner texts something like **"send chases" / "send all" / "fire them"** → the send system (daemon-side `chase_command_watcher`) texts back a **one-time random code** (e.g. `SEND-9F3A`) with the batch count.
+2. Owner replies that **exact code** → the daemon fires the batch with every guard on (reply-aware, business hours, ~10-min pace, 4 PM ET cutoff).
+
+So when the user asks to send: confirm the intent and tell them **"You'll get a one-time code — reply it exactly to fire; nothing sends until you do."** Then STOP — the daemon issues the code and does the send; you don't run anything. **NEVER** tell the user "I can't send / do it from the workstation" for chases (you can, via the code), and **NEVER** claim there's an "approve button." A casual word ("approve"/"yes") only *produces a code*, it can NEVER send by itself — that's the safeguard from the 6/30 stray-"approve" incident. To stop/cancel: the owner texts **"pause chases"** (cancels any live code too).
+
+For anything else genuinely not doable here (single-bid drafting, takeoffs, accountant brief, estimates), say it needs the workstation.
 
 ---
 

@@ -7,11 +7,14 @@ messages (OpenClaw session files), detects a chase command, and ACTS on it so
 the approval gate (god-level rebuild 6/16) can be cleared without Carol-the-agent
 in the loop:
 
-  • "approve" / "approve chases" / "send the chases" / "go ahead"
-        → add today to chase_autopilot.approved_dates AND launch chase_executor
-          (sends now if in business hours; the executor re-checks every guard).
-  • "pause chases" / "stop chases" / "hold the chases" / "don't chase"
-        → add today to pause_dates (executor aborts).
+  • "send chases" / "send all" / "approve chases" / "go ahead" / "fire"
+        → issue a ONE-TIME random code and reply it to the owner. This does NOT
+          send. (6/30 safeguard: a casual word can only ever PRODUCE a code.)
+  • the one-time code itself (e.g. "SEND-9F3A")
+        → fire the batch: launch chase_executor --confirm-token <code>, the ONLY
+          path that bypasses the draft-only lock. Single-use, expires in 15 min.
+  • "pause chases" / "stop chases" / "don't chase"
+        → add today to pause_dates AND cancel any live send-code (executor aborts).
   • "resume chases" / "unpause"
         → remove today from pause_dates.
 
@@ -30,6 +33,7 @@ import glob
 import json
 import os
 import re
+import secrets
 import subprocess
 import sys
 from datetime import datetime, timedelta
@@ -61,14 +65,17 @@ _PAUSE = re.compile(
     r"\b(pause|stop|hold|halt|skip)\b[^.]*\bchas|\bdon'?t (chase|send)\b|"
     r"\bno chas|\bhold (the )?chases?\b|\bpause chases?\b", re.I)
 _RESUME = re.compile(r"\b(resume|unpause|un-pause|restart|continue)\b[^.]*\bchas|\bunpause\b", re.I)
-# Approve must be chase-scoped OR a bare standalone approval — so "approve the
-# estimate" / "approve the proposal" does NOT fire chases.
-_APPROVE_CHASE = re.compile(
-    r"(approve|approved|send|go ahead|fire|release)[^.]{0,25}\bchas|"
-    r"\bchas[^.]{0,25}(approve|send|go ahead|away|now)", re.I)
-_APPROVE_BARE = re.compile(
-    r"^\s*(yes[,!\s]*)?(approve[ds]?|send (the |today'?s )?chases?|go ahead|"
-    r"approved? (them|all|today))\s*[.!]*\s*$", re.I)
+# A SEND REQUEST (chase-scoped send/fire/approve, or a bare standalone) does NOT
+# send — it makes Carol issue a ONE-TIME CODE; the owner must reply that exact code
+# to fire. So over-matching here is safe (worst case = an extra code the user
+# ignores). "approve the estimate/proposal" needs a chase word, so it won't match.
+_SEND_REQUEST = re.compile(
+    r"\b(send|fire|approve[ds]?|go ?ahead|release|shoot|blast)\b"
+    r"[^.]{0,30}(\bchas\w*|\bfollow[- ]?ups?|\bthem\b|\ball\b|\bthese\b|\bthose\b|\btoday\b|\b\d+\b)|"
+    r"\bchas\w*[^.]{0,20}\b(send|fire|approve|go ?ahead|now|away)\b", re.I)
+_SEND_REQUEST_BARE = re.compile(
+    r"^\s*(yes[,!\s]*)?(approve[ds]?|send|fire|go ahead|do it|"
+    r"send (them|all|the chases?|today'?s chases?))\s*[.!]*\s*$", re.I)
 
 
 def log(msg: str, quiet: bool = False):
@@ -121,43 +128,103 @@ def _save(p, obj):
     tmp.replace(p)
 
 
+def _today() -> str:
+    return datetime.now().date().isoformat()
+
+
+SEND_PENDING = ROOT / "data" / "memory" / "chase_send_pending.json"
+PLAN_DIR = ROOT / "data" / "proposed_chases"
+CODE_TTL_MIN = 15
+
+
+def _gen_code() -> str:
+    return "SEND-" + secrets.token_hex(2).upper()   # e.g. SEND-9F3A (random, one-time)
+
+
+def _active_pending():
+    """The live unused / un-expired / today send-code, else None."""
+    p = _load(SEND_PENDING, None)
+    if not isinstance(p, dict) or p.get("used") or p.get("date") != _today():
+        return None
+    exp = p.get("expires_at")
+    try:
+        if exp and datetime.fromisoformat(exp) < datetime.now():
+            return None
+    except Exception:
+        pass
+    return p
+
+
+def _plan_count() -> int:
+    pf = PLAN_DIR / f"proposed_chases_{_today()}.json"
+    plan = _load(pf, {})
+    return len(plan.get("proposed", []) if isinstance(plan, dict) else [])
+
+
 def _classify(text: str) -> str | None:
     t = text.strip()
     if not t or len(t) > 200:
         return None
+    # An EXACT match to the live one-time code = the send confirm (check first).
+    pend = _active_pending()
+    if pend and t.upper() == str(pend.get("code", "")).strip().upper():
+        return "send_confirm"
     if _RESUME.search(t):
         return "resume"
     if _PAUSE.search(t):
         return "pause"
     if _NEG.search(t):
         return None
-    if _APPROVE_CHASE.search(t) or _APPROVE_BARE.match(t):
-        return "approve"
+    if _SEND_REQUEST.search(t) or _SEND_REQUEST_BARE.match(t):
+        return "send_request"
     return None
 
 
-def _today() -> str:
-    return datetime.now().date().isoformat()
-
-
-def do_approve(dry: bool):
-    cfg = _load(AUTOPILOT, {})
-    appr = set(cfg.get("approved_dates") or [])
-    appr.add(_today())
-    cfg["approved_dates"] = sorted(d for d in appr if d >= _today())
-    cfg.setdefault("approval_required", True)
+def do_send_request(dry: bool):
+    """Owner asked to send — issue a ONE-TIME code and DO NOT send. The owner must
+    reply that exact code to fire (chase_executor consumes it via --confirm-token).
+    A casual word produces only a code, never a send — that's the 6/30 safeguard."""
+    n = _plan_count()
+    if n == 0:
+        tg("No chases are eligible right now — nothing to send. (See the chase report.)")
+        return "send-request: nothing eligible"
+    code = _gen_code()
+    pend = {"code": code, "date": _today(), "used": False,
+            "created_at": datetime.now().isoformat(timespec="seconds"),
+            "expires_at": (datetime.now() + timedelta(minutes=CODE_TTL_MIN)).isoformat(timespec="seconds"),
+            "batch_count": n}
     if not dry:
+        _save(SEND_PENDING, pend)
+    tg(f"📤 Ready to send *{n}* chase(s) now — ~10-min pace, every guard on "
+       f"(reply-aware · business hours · stops by 4 PM ET).\n\n"
+       f"⚠️ To FIRE, reply EXACTLY:  *{code}*\n"
+       f"_(one-time · expires in {CODE_TTL_MIN} min · any other message sends nothing)_")
+    return f"send-request: issued code for {n} bids"
+
+
+def do_send_confirm(dry: bool):
+    """Owner replied the valid code — fire the batch. Lift today's emergency pause so
+    the executor's loop starts clean, then launch it with the one-time token."""
+    pend = _active_pending()
+    if not pend:
+        tg("That code expired or was already used. Text *send chases* for a fresh one.")
+        return "send-confirm: no active code"
+    code, n = pend.get("code", ""), pend.get("batch_count", "?")
+    if not dry:
+        cfg = _load(AUTOPILOT, {})
+        cfg["pause_dates"] = [d for d in (cfg.get("pause_dates") or []) if d != _today()]
         _save(AUTOPILOT, cfg)
-        # launch the (guarded) executor — sends now if in business hours
         try:
-            subprocess.Popen([sys.executable, str(EXECUTOR)],
+            subprocess.Popen([sys.executable, str(EXECUTOR), "--confirm-token", code],
                              cwd=str(ROOT),
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         except Exception as e:
             log(f"  executor launch failed: {e}")
-    tg("✅ *Chases approved for today.* Sending now (the executor re-checks every "
-       "guard — reply-aware, tiered, business-hours). Reply 'pause chases' to stop.")
-    return "approved + executor launched"
+            tg("⚠️ Couldn't launch the sender — try again, or send from the workstation.")
+            return "send-confirm: launch failed"
+    tg(f"✅ *Confirmed.* Sending {n} chase(s) now at ~10-min pace — I'll report each as "
+       f"it goes. Reply *pause chases* to stop mid-batch.")
+    return f"send-confirm: fired {n} bids via one-time code"
 
 
 def do_pause(dry: bool):
@@ -165,12 +232,18 @@ def do_pause(dry: bool):
     pause = set(cfg.get("pause_dates") or [])
     pause.add(_today())
     cfg["pause_dates"] = sorted(pause)
-    # un-approve too, so an earlier approval can't override the pause
     cfg["approved_dates"] = [d for d in (cfg.get("approved_dates") or []) if d != _today()]
+    # cancel any live send code so a queued confirm can't fire
+    pend = _load(SEND_PENDING, None)
+    if isinstance(pend, dict) and not pend.get("used"):
+        pend["used"] = True
+        if not dry:
+            _save(SEND_PENDING, pend)
     if not dry:
         _save(AUTOPILOT, cfg)
-    tg("⏸ *Chases paused for today.* Nothing will send. Reply 'resume chases' to lift.")
-    return "paused today"
+    tg("⏸ *Chases paused.* Nothing sends (any pending send-code is cancelled). "
+       "Reply 'resume chases' to lift.")
+    return "paused today + cancelled pending code"
 
 
 def do_resume(dry: bool):
@@ -178,11 +251,12 @@ def do_resume(dry: bool):
     cfg["pause_dates"] = [d for d in (cfg.get("pause_dates") or []) if d != _today()]
     if not dry:
         _save(AUTOPILOT, cfg)
-    tg("▶ *Chase pause lifted.* Reply 'approve' to authorize today's batch.")
-    return "resumed (pause lifted; still needs approval)"
+    tg("▶ *Chase pause lifted.* To send, text *send chases* and reply the one-time code.")
+    return "resumed (pause lifted)"
 
 
-ACTIONS = {"approve": do_approve, "pause": do_pause, "resume": do_resume}
+ACTIONS = {"send_request": do_send_request, "send_confirm": do_send_confirm,
+           "pause": do_pause, "resume": do_resume}
 
 
 def main():
